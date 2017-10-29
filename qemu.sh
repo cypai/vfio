@@ -22,6 +22,7 @@ sudo qemu-system-x86_64 \
     -parallel none \
     -soundhw hda \
     -usb -usbdevice host:046d:c52f \
+    -usb -usbdevice host:04d9:0203 \
     -device vfio-pci,host=01:00.0,multifunction=on \
     -device vfio-pci,host=01:00.1 \
     -boot dc \
