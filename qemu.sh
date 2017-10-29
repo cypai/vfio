@@ -21,6 +21,7 @@ sudo qemu-system-x86_64 \
     -serial none \
     -parallel none \
     -soundhw hda \
+    -vga none \
     -usb -usbdevice host:046d:c52f \
     -usb -usbdevice host:04d9:0203 \
     -device vfio-pci,host=01:00.0,multifunction=on \
@@ -29,6 +30,6 @@ sudo qemu-system-x86_64 \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
     -device virtio-scsi-pci,id=scsi \
-    -drive file=./Win7_Ult_SP1_English_x64.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
+    -drive file=./Windows_8_Professional.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
     -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
     -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
