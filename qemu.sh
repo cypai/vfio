@@ -8,11 +8,11 @@ export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
-sudo qemu-system-x86_64 \
+taskset -c 0-7 qemu-system-x86_64 \
     -name "windows7vm",process="windows7vm" \
     -machine type=q35,accel=kvm \
     -cpu host,kvm=off \
-    -smp 6,sockets=1,cores=3,threads=2 \
+    -smp 8,sockets=1,cores=2,threads=4 \
     -enable-kvm \
     -m 6G \
     -mem-prealloc \
