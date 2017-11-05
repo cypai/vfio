@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 
+vmname="windows8vm"
+configfile=/etc/vfio-pci.cfg
+
+vfiobind() {
+    dev="$1"
+    vendor=$(cat /sys/bus/pci/devices/$dev/vendor)
+    device=$(cat /sys/bus/pci/devices/$dev/device)
+    if [ -e /sys/bus/pci/devices/$dev/driver ]; then
+        echo $dev > /sys/bus/pci/devices/$dev/driver/unbind
+    fi
+    echo $vendor $device > /sys/bus/pci/drivers/vfio-pci/new_id
+
+}
+
+
+if ps -A | grep -q $vmname; then
+    echo "VM is already running"
+    exit 1
+else
+    cat $configfile | while read line;do
+        echo $line | grep ^# >/dev/null 2>&1 && continue
+        vfiobind $line
+    done
+fi
+
 # use pulseaudio
 export QEMU_AUDIO_DRV=pa
 export QEMU_PA_SAMPLES=8192
@@ -9,7 +34,7 @@ export QEMU_PA_SERVER=/run/user/1000/pulse/native
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
 taskset -c 0-7 qemu-system-x86_64 \
-    -name "windows7vm",process="windows7vm" \
+    -name $vmname,process=$vmname \
     -machine type=q35,accel=kvm \
     -cpu host,kvm=off \
     -smp 8,sockets=1,cores=2,threads=4 \
@@ -22,10 +47,9 @@ taskset -c 0-7 qemu-system-x86_64 \
     -parallel none \
     -soundhw hda \
     -vga none \
-    -usb -usbdevice host:046d:c52f \
-    -usb -usbdevice host:04d9:0203 \
     -device vfio-pci,host=01:00.0,multifunction=on \
     -device vfio-pci,host=01:00.1 \
+    -device vfio-pci,host=05:00.0 \
     -boot dc \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
