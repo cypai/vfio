@@ -27,13 +27,13 @@ fi
 
 # use pulseaudio
 export QEMU_AUDIO_DRV=pa
-export QEMU_PA_SAMPLES=8192
-export QEMU_AUDIO_TIMER_PERIOD=99
+#export QEMU_PA_SAMPLES=8192
+#export QEMU_AUDIO_TIMER_PERIOD=99
 export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
-taskset -c 0-7 qemu-system-x86_64 \
+taskset -c 0-7 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
     -name $vmname,process=$vmname \
     -machine type=q35,accel=kvm \
     -cpu host,kvm=off \
