@@ -47,13 +47,13 @@ taskset -c 0-7 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
     -parallel none \
     -soundhw hda \
     -vga none \
-    -device vfio-pci,host=01:00.0,multifunction=on \
-    -device vfio-pci,host=01:00.1 \
-    -device vfio-pci,host=05:00.0 \
+    -device vfio-pci,host=02:00.0,multifunction=on \
+    -device vfio-pci,host=02:00.1 \
+    -device vfio-pci,host=06:00.0 \
     -boot dc \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
     -device virtio-scsi-pci,id=scsi \
-    -drive file=./Windows_8_Professional.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
     -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
     -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
+#-drive file=./Windows_8_Professional.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
