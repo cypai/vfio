@@ -39,7 +39,7 @@ taskset -c 0-7 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
     -cpu host,kvm=off \
     -smp 8,sockets=1,cores=2,threads=4 \
     -enable-kvm \
-    -m 6G \
+    -m 8G \
     -mem-prealloc \
     -balloon none \
     -rtc clock=host,base=localtime \
