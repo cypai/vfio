@@ -50,6 +50,7 @@ taskset -c 0-7 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
     -device vfio-pci,host=02:00.0,multifunction=on \
     -device vfio-pci,host=02:00.1 \
     -device vfio-pci,host=06:00.0 \
+    -usb -usbdevice host:046d:c21d \
     -boot dc \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
