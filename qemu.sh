@@ -33,11 +33,11 @@ export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
-taskset -c 0-7 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
+taskset -c 0-3 /home/cpai/work/qemu/build/x86_64-softmmu/qemu-system-x86_64 \
     -name $vmname,process=$vmname \
     -machine type=q35,accel=kvm \
     -cpu host,kvm=off \
-    -smp 8,sockets=1,cores=2,threads=4 \
+    -smp 4,sockets=1,cores=2,threads=2 \
     -enable-kvm \
     -m 8G \
     -mem-prealloc \
