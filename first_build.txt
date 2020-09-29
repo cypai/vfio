@@ -1,0 +1,25 @@
+Building Linux
+
+Full Parts List:
+CPU:		Intel Core i5-7600K 3.8GHz Quad-Core Processor
+CPU Cooler:	Cryorig H7 49.0 CFM CPU Cooler
+Motherboard:	MSI Z270 SLI PLUS ATX LGA1151
+Memory:		Corsair Vengeance LPX 16 GB (2x8 GB) DDR4-3000 Memory
+Storage:	Samsung 850 EVO-Series 500 GB 2.5" SSD M.2
+		Western Digital Caviar Blue 1 TB 3.5" 7200 RPM Internal HDD
+GPU:		Sapphire Radeon RX 480 8 GB NITRO+ Video Card
+Case:		Corsair 200R ATX Mid Tower Case
+PSU:		EVGA SuperNOVA NEX 650W 80+ Gold Certified Fully-Modular ATX Power Supply
+
+Estimated Power Draw: 440 W
+
+Potential Additional Parts:
+Gigabyte Radeon RX 460 Windforce OC 4 GB: Only uses 75 Watts and doesn't need a PSU connection
+
+
+Linux Partitions
+
+/boot	Primary ext2 SSD 252 MB
+/	Logical ext4 SSD 64 GB
+/home	Logical ext4 HDD
+swap	Logical swap HDD 2 GB
