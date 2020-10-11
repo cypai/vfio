@@ -39,7 +39,7 @@ taskset -c 0-3 qemu-system-x86_64 \
     -cpu host,-hypervisor \
     -smp 6,sockets=1,cores=3,threads=2 \
     -enable-kvm \
-    -m 12G \
+    -m 10G \
     -mem-prealloc \
     -balloon none \
     -rtc clock=host,base=localtime \
