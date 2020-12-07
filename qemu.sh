@@ -57,7 +57,7 @@ taskset -c 0-3 qemu-system-x86_64 \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
     -device virtio-scsi-pci,id=scsi \
-    -drive file=/dev/mapper/lmsdd-windows,id=disk0,format=raw
+    -drive file=/dev/mapper/lmsdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads
    # -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
    # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
    # -drive file=./Windows_8_Professional.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
