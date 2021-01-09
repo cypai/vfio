@@ -33,7 +33,7 @@ export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
-taskset -c 0-3 qemu-system-x86_64 \
+taskset -c 0-3 /hdd/cpai/work/qemu-5.2.0/build/qemu-system-x86_64 \
     -name $vmname,process=$vmname \
     -machine type=q35,accel=kvm \
     -cpu host,-hypervisor \
@@ -41,7 +41,6 @@ taskset -c 0-3 qemu-system-x86_64 \
     -enable-kvm \
     -m 16G \
     -mem-prealloc \
-    -balloon none \
     -rtc clock=host,base=localtime \
     -serial none \
     -parallel none \
