@@ -39,7 +39,7 @@ taskset -c 0-3 qemu-system-x86_64 \
     -cpu host,-hypervisor \
     -smp 6,sockets=1,cores=3,threads=2 \
     -enable-kvm \
-    -m 10G \
+    -m 16G \
     -mem-prealloc \
     -balloon none \
     -rtc clock=host,base=localtime \
@@ -59,6 +59,6 @@ taskset -c 0-3 qemu-system-x86_64 \
     -device virtio-scsi-pci,id=scsi \
     -drive file=/dev/mapper/lmsdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads
    # -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
-   # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
-   # -drive file=./Windows_8_Professional.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
    # -device vfio-pci,host=06:00.0
+   # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
+   # -drive file=/home/cpai/Downloads/Win10_20H2_v2_English_x64.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd
