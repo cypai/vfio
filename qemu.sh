@@ -26,17 +26,17 @@ if ps -A | grep -q $vmname; then
 fi
 
 # use pulseaudio
-export QEMU_AUDIO_DRV=pa
+#export QEMU_AUDIO_DRV=pa
 #export QEMU_PA_SAMPLES=8192
 #export QEMU_AUDIO_TIMER_PERIOD=99
-export QEMU_PA_SERVER=/run/user/1000/pulse/native
+#export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
 cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
 
-taskset -c 0-3 /hdd/cpai/work/qemu-5.2.0/build/qemu-system-x86_64 \
+/hdd/cpai/work/qemu-5.2.0/build/qemu-system-x86_64 \
     -name $vmname,process=$vmname \
     -machine type=q35,accel=kvm \
-    -cpu host,-hypervisor \
+    -cpu host,kvm=off,hv_vendor_id=1234567890ab,-hypervisor,hv_vapic,hv_time,hv_relaxed,hv_spinlocks=0x1fff,l3-cache=on,migratable=no,+invtsc  \
     -smp 6,sockets=1,cores=3,threads=2 \
     -enable-kvm \
     -m 16G \
@@ -45,9 +45,11 @@ taskset -c 0-3 /hdd/cpai/work/qemu-5.2.0/build/qemu-system-x86_64 \
     -serial none \
     -parallel none \
     -soundhw hda \
+    -audiodev pa,id=pa1,server=/run/user/1000/pulse/native \
     -vga none \
-    -device vfio-pci,host=02:00.0,multifunction=on \
-    -device vfio-pci,host=02:00.1 \
+    -device ioh3420,bus=pcie.0,addr=1c.0,multifunction=on,port=1,chassis=1,id=root.1 \
+    -device vfio-pci,host=02:00.0,bus=root.1,addr=00.0,multifunction=on \
+    -device vfio-pci,host=02:00.1,bus=root.1,addr=00.1 \
     -device usb-host,hostbus=3,vendorid=0x04d9,productid=0x0203 \
     -device usb-host,hostbus=3,vendorid=0x046d,productid=0xc52f \
     -device usb-host,vendorid=0x046d,productid=0xc21d \
@@ -56,8 +58,8 @@ taskset -c 0-3 /hdd/cpai/work/qemu-5.2.0/build/qemu-system-x86_64 \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
     -device virtio-scsi-pci,id=scsi \
-    -drive file=/dev/mapper/lmsdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads
+    -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads
    # -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
    # -device vfio-pci,host=06:00.0
-   # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd
-   # -drive file=/home/cpai/Downloads/Win10_20H2_v2_English_x64.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd
+   # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd \
+   # -drive file=/home/cpai/Downloads/Win10_20H2_v2_English_x64.iso,id=isocd,format=raw,if=none -device scsi-cd,drive=isocd \
