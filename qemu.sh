@@ -44,7 +44,7 @@ cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
     -rtc clock=host,base=localtime \
     -serial none \
     -parallel none \
-    -soundhw hda \
+    -device intel-hda -device hda-duplex \
     -audiodev pa,id=pa1,server=/run/user/1000/pulse/native \
     -vga none \
     -device ioh3420,bus=pcie.0,addr=1c.0,multifunction=on,port=1,chassis=1,id=root.1 \
@@ -57,8 +57,10 @@ cp /usr/share/OVMF/OVMF_VARS.fd /tmp/my_vars.fd
     -usb \
     -drive if=pflash,format=raw,readonly,file=/usr/share/OVMF/OVMF_CODE.fd \
     -drive if=pflash,format=raw,file=/tmp/my_vars.fd \
-    -device virtio-scsi-pci,id=scsi \
-    -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads
+    -object iothread,id=io1 \
+    -device virtio-scsi-pci,id=disk0,iothread=io1,num_queues=4,bus=pcie.0 \
+    -device scsi-hd,drive=disk0 \
+    -drive file=/dev/mapper/lmsdd-windows,id=disk0,format=raw,cache=none,cache.direct=on,aio=threads,if=none
    # -drive file=/dev/mapper/lmhdd-windows,id=disk0,format=raw \
    # -device vfio-pci,host=06:00.0
    # -drive file=./virtio-win-0.1.140.iso,id=virtiocd,format=raw,if=none -device ide-cd,bus=ide.1,drive=virtiocd \
